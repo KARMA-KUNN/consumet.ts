@@ -4,8 +4,7 @@ COPY package*.json yarn.lock ./
 RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
-RUN ls -la dist/
 EXPOSE 3000
-ENV PORT=3000
 ENV NODE_ENV=production
+ENV HOST=0.0.0.0
 CMD ["sh", "-c", "node $(ls dist/*.js | head -1)"]
