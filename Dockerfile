@@ -1,10 +1,11 @@
-FROM node:20.18.1-alpine
+ FROM node:20.18.1-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package*.json yarn.lock ./
+RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
+RUN ls -la dist/
 EXPOSE 3000
 ENV PORT=3000
 ENV NODE_ENV=production
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "node $(ls dist/*.js | head -1)"]
